@@ -1,13 +1,13 @@
 'use client'
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import messi from '../../images/messi.jpg'
 import Image from 'next/image';
 import Footer from '@/components/footer';
 import { useAuth } from '@/contexts/authcontext';
 import newRequest from '@/utils/newRequest';
 
-export default function SignInPage() {
+function SignInPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const action = searchParams.get('action');
@@ -131,3 +131,13 @@ export default function SignInPage() {
     
   );
 };
+
+const WrappedSignInPage = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SignInPage />
+    </Suspense>
+  );
+};
+
+export default WrappedSignInPage;
