@@ -1,7 +1,7 @@
 'use client'
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState, Suspense } from 'react';
-import messi from '../../images/messi.jpg'
+import messi from '../../images/messiclear.png'
 import Image from 'next/image';
 import Footer from '@/components/footer';
 import { useAuth } from '@/contexts/authcontext';
@@ -83,8 +83,8 @@ function SignInPage() {
   }, [action]);
 
   return (
-    <div>
-        <div style = {{width: '100vw', height: '100vh'}} id="signup">
+    <div className = "main-container">
+        <div  style = {{width: '100vw', height: '100vh'}} id="signup">
             <div style = {{position: 'absolute', width: '50vw', marginLeft: '0vw'}}>
                 <div style = {{width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                     <h1>{isSignup? "Sign Up" : "Log In"}</h1>
@@ -114,7 +114,7 @@ function SignInPage() {
                         onChange={(e) => updateLoginfo("iagreetotos", !loginfo.iagreetotos)} 
                       />
                     <label style = {{color: agree? 'white' : 'red'}}>
-                          I agree to the <a href="/terms-of-service" target="_blank" rel="noopener noreferrer">terms of service</a>.
+                          I have read and agree to the <a href="/termsofuse" target="_blank" rel="noopener noreferrer">terms of use</a>.
                         </label>
                       </div>: 
                     <></>}
@@ -123,7 +123,7 @@ function SignInPage() {
                 </div>
             </div>
             <div style = {{position: 'absolute', width: '50vw', marginLeft: '50vw', marginTop: '0vh'}}>
-                <Image style = {{height: '100vh', width: '45vw'}} src = {messi} alt = "Lionel Messi, license details and download accessible below, from Wikipedia Commons"></Image>
+                <Image className = "messi" style = {{height: '100vh', width: 'auto'}} src = {messi} alt = "Lionel Messi, license details and download accessible below, from Wikipedia Commons"></Image>
             </div>
         </div>
         <Footer />
