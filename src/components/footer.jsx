@@ -1,10 +1,26 @@
+'use client'
+import { useRouter } from "next/navigation"
+
 export default function Footer() {
+    const router = useRouter()
+    const tou = () =>{
+        router.push('/termsofuse')
+    }
+    const imgLis = () =>{
+        router.push('/imagelicenses')
+    }
+    const aff = () =>{
+        router.push('/affiliates')
+    }
+
+
     return(
         <div style = {{width: '100vw', borderTop: '1px solid #555555dd', display: 'flex', justifyContent: 'space-between'}}>
             <div style = {{marginLeft: '20vw', marginTop: '2vh', display: 'flex', flexDirection: 'column', gap: '.5em', width: '15vw'}}>
                 <button className="footer-button" style = {{fontSize: '.8em'}}><p>Blog</p></button>
-                <button className="footer-button" style = {{fontSize: '.8em'}}><p>Image Licenses</p></button>
-                <button className="footer-button" style = {{fontSize: '.8em'}}><p>Terms Of Use</p></button>
+                <button className="footer-button" style = {{fontSize: '.8em'}} onClick = {imgLis}><p>Image Licenses</p></button>
+                <button className="footer-button" style = {{fontSize: '.8em'}} onClick = {tou}><p>Terms Of Use</p></button>
+                <button className="footer-button" style = {{fontSize: '.8em'}} onClick = {aff}><p>Affiliates</p></button>
                 <div style = {{marginBottom: '2em'}} />
             </div>
             <div style = {{marginRight: '20vw', marginTop: '2vh', display: 'flex', flexDirection: 'column', gap: '.5em', width: '15vw', textAlign: 'center'}}>

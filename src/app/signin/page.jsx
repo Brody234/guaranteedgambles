@@ -84,24 +84,26 @@ function SignInPage() {
 
   return (
     <div className = "main-container">
-        <div  style = {{width: '100vw', height: '100vh'}} id="signup">
-            <div style = {{position: 'absolute', width: '50vw', marginLeft: '0vw'}}>
+        <div  style = {{width: '100vw', height: '100vh', display: 'flex', justifyContent: 'space-between'}} id="signup">
+            <div style = {{width: '40vw'}}>
                 <div style = {{width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-                    <h1>{isSignup? "Sign Up" : "Log In"}</h1>
-                    <p>Email</p>
-                    <input value = {loginfo.email} onChange={(e)=>updateLoginfo("email", e.target.value)}></input>
-                    {isSignup? <><p>Phone Number (optional)</p>
-                    <input value = {loginfo.phoneNumber} onChange={(e)=>updateLoginfo("phoneNumber", e.target.value)}></input>
+                    <div className = 'log-text-case'> 
+                      <h1 className='log-text'>{isSignup? "Sign Up" : "Log In"}</h1>
+                    </div>
+                    <input placeholder = "Email" value = {loginfo.email} onChange={(e)=>updateLoginfo("email", e.target.value)} className='login-box'></input>
+                    {isSignup? <><p></p>
+                    <input  placeholder = "Phone Number (optional)" value = {loginfo.phoneNumber || ""} onChange={(e)=>updateLoginfo("phoneNumber", e.target.value)} className='login-box'></input>
                     </>:''}
-                    <p>Password</p>
-                    <input value = {loginfo.password} onChange={(e)=>updateLoginfo("password", e.target.value)}></input>
+                    <input placeholder = "Password" type = "password" value = {loginfo.password} onChange={(e)=>updateLoginfo("password", e.target.value)} className='login-box'></input>
                     {isSignup && (
                       <>
-                        <p>Confirm Password</p>
                         <input
                           value={loginfo.confirmPassword}
+                          className='login-box'
+                          type = "password"
+                          placeholder='Confirm Password'
                           onChange={(e) => updateLoginfo("confirmPassword", e.target.value)}
-                          style={{ borderColor: match ? 'none' : 'red', borderWidth: '1px', borderStyle: 'solid' }}
+                          style={{ borderColor: match ? '#00000000' : 'red', borderWidth: '1px', borderStyle: 'solid' }}
                         />
                       </>
                     )}
@@ -118,11 +120,11 @@ function SignInPage() {
                         </label>
                       </div>: 
                     <></>}
-                    {isSignup? <button onClick = {signup}><p>Sign Up</p></button> : <button onClick = {loginButton}><p>Log In</p></button>}
-                    {isSignup? <button onClick = {()=>setIsSignup(false)}><p>Already have an account? Log in.</p></button> : <button onClick = {()=>setIsSignup(true)}><p>Need an account? Sign up.</p></button>}
+                    {isSignup? <button onClick = {signup} className = 'primary-button'><p>Sign Up</p></button> : <button onClick = {loginButton} className = 'primary-button'><p>Log In</p></button>}
+                    {isSignup? <button onClick = {()=>setIsSignup(false)} className = 'switch-logtype-text'><p>Already have an account? Log in.</p></button> : <button onClick = {()=>setIsSignup(true)} className = 'switch-logtype-text'><p>Need an account? Sign up.</p></button>}
                 </div>
             </div>
-            <div style = {{position: 'absolute', width: '50vw', marginLeft: '50vw', marginTop: '0vh'}}>
+            <div style = {{ width: '50vw', marginTop: '0vh'}}>
                 <Image className = "messi" style = {{height: '100vh', width: 'auto'}} src = {messi} alt = "Lionel Messi, license details and download accessible below, from Wikipedia Commons"></Image>
             </div>
         </div>
