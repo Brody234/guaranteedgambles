@@ -1,17 +1,23 @@
+'use client'
 import { Inter } from "next/font/google";
+import { AuthProvider } from "@/contexts/authcontext";
+import { OppProvider } from "@/contexts/arbitragecontext";
+import CustomHead from '@/components/head';
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  title: "Guaranteed Gambles",
-  description: "The best site for finding arbitrage trades.",
-};
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <CustomHead />
+      <body className={inter.className}>
+        <AuthProvider>
+          <OppProvider>
+            {children}
+          </OppProvider>
+        </AuthProvider>
+      </body>
     </html>
   );
 }
