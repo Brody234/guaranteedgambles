@@ -532,3 +532,25 @@ html, body {
   color: #ffffff99;
   margin-top: .5em;
 }
+
+.affiliate-box {
+  border-radius: 5px;
+  width: 20vw;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.affiliate-box h3 {
+  width: 100%;
+  text-align: center;
+  margin-top: 4vh;
+  font-size: 1.4vw;
+}
+
+.affiliate-money {
+  font-size: 3vw;
+  margin-bottom: 4vh;
+  margin-top: 2vh;
+}
+

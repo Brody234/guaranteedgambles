@@ -11,12 +11,18 @@ function SignInPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const action = searchParams.get('action');
+  const stripe = searchParams.get('stripe')
+  const monthly = searchParams.get('monthly')
   const [match, setMatch] = useState(true)
   const [agree, setAgree] = useState(true)
   const [loginfo, setLoginfo] = useState({email: "", password: "", confirmPassword: "", phoneNumber: "", iagreetotos: false})
   const [isSignup, setIsSignup] = useState(true);
   const {token, user, login} = useAuth()
   
+  useEffect(()=>{
+    console.log(monthly)
+  }, [monthly])
+
   const updateLoginfo = (property, val) => {
     setLoginfo(prevLoginfo => ({
         ...prevLoginfo,
@@ -24,13 +30,41 @@ function SignInPage() {
     }));
   };  
 
+  const checkAlready = (session) => {
+    if(session?.alreadySubscribed){
+      login(session.user, token)
+      router.push('/tools/arbitrage')
+      return true
+    }
+    return false
+  }
+
+  const checkout = async () =>{
+    let session
+    console.log(monthly)
+    if(monthly == "true"){
+      session = await newRequest.get('/stripe/subscribe/monthly', token)
+    }
+    else{
+      session = await newRequest.get('/stripe/subscribe/yearly', token)
+    }
+    if(!checkAlready(session)){
+      router.push(session.url.url)
+    }  
+  }
+
   useEffect(()=>{
     if(user && token){
       if(user?.subscribed){
         router.push('/tools/arbitrage')
       }
       else{
-        router.push('/pay')
+        if(stripe){
+          checkout()
+        }
+        else{
+          router.push('/#join')
+        }
       }
     }
   }, [token, user])

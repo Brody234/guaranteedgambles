@@ -31,9 +31,10 @@ export default function Arb() {
     };
 
     const arb = async ()=>{
-        if (token){
+      console.log("arb")
+        if (token && region){
             console.log("call")
-            const data = await newRequest.get('/arbitrage/us', token)
+            const data = await newRequest.get('/arbitrage/'+region, token)
             console.log(data)
             setOpportunities(data.opportunities.sort((a, b)=>b.profit-a.profit))
         }
@@ -86,7 +87,7 @@ export default function Arb() {
                             </select>
                         </div>
 
-                        <button onClick = {()=>{disable}} disabled = {isDisabled}       
+                        <button onClick = {()=>{arb()}}        
                             className = "find-opportunities-button"><p>Find Opportuninities</p></button>
                     </div>
                     <div style = {{height: '3vh'}}/>
@@ -198,7 +199,7 @@ const formatDate = (date) => {
     } else if (isThisWeek(matchDate)) {
         return format(matchDate, 'EEEE p'); // Format as Day of the week and time
     } else if (isAfter(matchDate, addDays(now, 7))) {
-        return format(matchDate, 'dd/MM/yy p'); // Format as dd/mm/yy and time
+        return format(matchDate, 'MM/dd/yy p'); // Format as dd/mm/yy and time
     } else {
         return format(matchDate, 'EEEE p'); // Format as Day of the week and time
     }

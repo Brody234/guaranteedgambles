@@ -3,18 +3,63 @@ import messi from '../images/messiclear.png'
 import lebron from '../images/lebronclear2.png'
 import arbitrage from '../images/arbitrage.png'
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import Footer from '@/components/footer';
 import { useAuth } from '@/contexts/authcontext';
 import { useState, useEffect } from 'react';
 import FadeInSection from '@/components/fade';
 import PageWrapper from '@/components/pagewrapper';
+import { useAff } from '@/contexts/affiliationcontext';
+import newRequest from '@/utils/newRequest';
 
 export default function Home() {
   const router = useRouter()
-  const {user, token, logout} = useAuth()
+  const {user, token, logout, login} = useAuth()
   const [monthly, setMonthly] = useState(false)
   const [isHeightLessThanWidth, setIsHeightLessThanWidth] = useState(false);
+  const query = useSearchParams()
+  const [pushReady, setPushReady] = useState(false)
+  const affiliateId = query.get('af');
+  const checkSession = query.get('checksession')
+  const { affiliate, setAffiliate } = useAff()
+
+  useEffect(() => {
+    
+    console.log("effecting")
+    if (affiliateId && affiliateId != affiliate) {
+        setAffiliate(affiliateId)
+        logClick(affiliateId);
+    }
+  }, []);
+
+  const check = async () => {
+    while(!user.subscribed){
+      const newU = await newRequest.get('/stripe/check', token)
+      console.log("newU")
+      console.log(newU)
+      if(newU && newU.user && newU.user.subscribed){
+        login(newU.user, token)
+        setPushReady(true)
+      }
+      else{
+        await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 5 seconds
+      }
+    }
+
+  }
+
+
+  useEffect(()=>{
+    if(user && user.subscribed && pushReady){
+      router.push('/tools/arbitrage')
+    }
+  }, [pushReady, user])
+
+  useEffect(()=>{
+    if(checkSession == "true" && token){
+      check()
+    }
+  }, [checkSession, token])
 
   useEffect(() => {
     const checkDimensions = () => {
@@ -30,8 +75,44 @@ export default function Home() {
     };
   }, []);
 
+  const checkAlready = (session) => {
+    console.log(session)
+    if(session?.alreadySubscribed){
+      login(session.user, token)
+      router.push('/tools/arbitrage')
+      return true
+    }
+    return false
+  }
 
-  const login = (action) => {
+  const join = async () => {
+    try{
+      let session = {url: ""}
+      if(!token){
+        router.push(`/signin?action=signup&stripe=true&monthly=${monthly}`)
+      }
+      else if(monthly){
+        session = await newRequest.get('/stripe/subscribe/monthly', token)
+        if(!checkAlready(session)){
+          router.push(session.url.url)
+        }
+
+      }
+      else{
+        session = await newRequest.get('/stripe/subscribe/yearly', token)
+        if(!checkAlready(session)){
+          router.push(session.url.url)
+        }      
+      }
+    
+    }
+    catch(err){
+      console.log(err)
+    }
+    
+  }
+
+  const loginP = (action) => {
     router.push(`/signin?action=${action}`)
   }
 
@@ -39,9 +120,16 @@ export default function Home() {
     if(user.subscribed){
       router.push('/tools/arbitrage')
     }
+    else if(checkSession == "true"){
+      check()
+    }
     else{
       router.push('/#join')
     }
+  }
+
+  const logClick = async (val) => {
+    const click = await newRequest.patch('/affiliate/countclick', {code: val}, '')
   }
 
   return (
@@ -69,8 +157,8 @@ export default function Home() {
           <div className='top-right-login' style = {{right: isHeightLessThanWidth? '2vw' : '2vw' }} >
             {user == null && token == null ?
               <div style = {{display: 'flex'}}>
-                <button onClick = {()=>login('login')} className="primary-button"><p>Login</p></button>
-                <button onClick = {()=>login('signup')} className='secondary-button'><p>Sign Up</p></button>
+                <button onClick = {()=>loginP('login')} className="primary-button"><p>Login</p></button>
+                <button onClick = {()=>loginP('signup')} className='secondary-button'><p>Sign Up</p></button>
               </ div>
               :
               <div >
@@ -118,7 +206,7 @@ export default function Home() {
                 <p className='perks-text'>- Access to the current (beta) version of our arbitrage bets searcher</p>
                 <p className='perks-text'>- Access to our odds calculator</p>
                 <p className='perks-text'>- Access to our discord server to connect with like minded smart gamblers</p>
-                <button className='join-button'><p>Join Now</p></button>
+                <button className='join-button' onClick = {join}><p>Join Now</p></button>
               </div>
             </div>
             { isHeightLessThanWidth&&
