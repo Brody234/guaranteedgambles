@@ -69,6 +69,13 @@ export default function Affiliates() {
         fontSize: isHeightLessThanWidth? '1.4vw' : '5.6vw'
     }
 
+
+    if(true){
+        return(<div>
+            
+        </div>)
+    }
+
     if(!user || !user.affiliateId){
         return(
             <div className='main-container'>

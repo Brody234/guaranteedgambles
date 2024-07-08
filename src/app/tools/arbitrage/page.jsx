@@ -21,6 +21,21 @@ export default function Arb() {
     const {opportunities, setOpportunities} = useOpp()
     const [outRegion, setOutRegion] = useState(false)
     const [isDisabled, setIsDisabled] = useState(false);
+    const [isHeightLessThanWidth, setIsHeightLessThanWidth] = useState(false);
+
+    useEffect(() => {
+        const checkDimensions = () => {
+          const { innerHeight, innerWidth } = window;
+          setIsHeightLessThanWidth(innerHeight < innerWidth);
+        };
+    
+        checkDimensions();
+        window.addEventListener('resize', checkDimensions);
+    
+        return () => {
+          window.removeEventListener('resize', checkDimensions);
+        };
+      }, []);
 
     const disable = () => {
       setIsDisabled(true);
@@ -89,10 +104,10 @@ export default function Arb() {
                 <div style = {{width: '100vw', textAlign: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     <h1>Arbitrage Finder</h1>
                     <div style = {{height: '2vh'}}/>
-                    <div style = {{width: '40vw'}}>
+                    <div style = {{width: isHeightLessThanWidth? '40vw': '90vw'}}>
                         <p>This page lists out possible arbitrage opportunities. It is important to check with both bookmakers to make sure they still exist.</p>
                     </div>
-                    <div style = {{width: '60vw', marginTop: '1em', display: "flex", alignItems: 'center', justifyContent: 'space-between'}}>
+                    <div style = {{width: '60vw', marginTop: '1em', display: "flex", alignItems: 'center', justifyContent: 'space-between', flexDirection: isHeightLessThanWidth? 'row':'column'}}>
                         <div style = {{display: 'flex'}}>
                             <select value={region} className = "select-region" style = {{border: !outRegion? "" : "1px red solid"}} onChange={handleChange}>
                                 <option value="">Select A Region</option>
@@ -104,7 +119,7 @@ export default function Arb() {
                         </div>
 
                         <button onClick = {()=>{arb()}}        
-                            className = "find-opportunities-button"><p>Find Opportuninities</p></button>
+                            className = "find-opportunities-button" style = {{marginTop: isHeightLessThanWidth? '' : '1vh'}}><p>Find Opportuninities</p></button>
                     </div>
                     <div style = {{height: '3vh'}}/>
                 </div>

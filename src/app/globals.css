@@ -573,3 +573,32 @@ html, body {
 .calculator-box {
   background-color: #333;
 }
+
+.calc-text {
+  margin-bottom: 1vh;
+}
+
+.calculator-input{
+  width: 5vw;
+  height: 8vh;
+  border-radius: 5px;
+  padding: 8px;
+  border: none;
+  text-align: center;
+  background-color: #777;
+  color: white;
+  font-size: 20px;
+}
+
+.inputNumber-calc {
+  /* Hiding the up and down arrows in Chrome, Safari, Edge, and Opera */
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.inputNumber-calc::-webkit-outer-spin-button,
+.inputNumber-calc::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
