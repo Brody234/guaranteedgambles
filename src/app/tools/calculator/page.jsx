@@ -32,10 +32,6 @@ function Calculator (){
         fractionText: "0/1"
     });
 
-    const boxText = {
-        color: 'black'
-    };
-
     useEffect(()=>{
         const fractionValue = fractionToString(odds.fraction)
         updateOdds('fractionText', ""+fractionValue)
@@ -105,11 +101,11 @@ function Calculator (){
     };
 
     return(
-    <div style={{ height: '60vh', width: '30vw', backgroundColor: 'white', margin: 'auto', borderRadius: '20px', textAlign: 'center' }}>
-    <p style={{ ...boxText, paddingTop: '15px' }}>Odds Converter</p>
+    <div style={{ minHeight: '60vh', minWsidth: '30vw', maxWidth: '90vw', backgroundColor: '#333', color: 'white', margin: 'auto', borderRadius: '20px', textAlign: 'center' }}>
+    <h2 style={{ paddingTop: '15px' }}>Odds Converter</h2>
     <div style={{ width: '100%', display: 'flex' }}>
         <div style={{ margin: 'auto' }}>
-            <p style = {boxText}>American</p>
+            <p className= "box-text">American</p>
             <input
                 type="text"
                 value={odds.american}
@@ -118,7 +114,7 @@ function Calculator (){
             />
         </div>
         <div style={{ margin: 'auto' }}>
-            <p style = {boxText}>Decimal</p>
+            <p className='box-text'>Decimal</p>
             <input
                 type="number"
                 value={truncateValue(odds.decimal, 2)}
@@ -129,7 +125,7 @@ function Calculator (){
     </div>
     <div style={{ width: '100%', display: 'flex' }}>
         <div style={{ margin: 'auto' }}>
-            <p style = {boxText}>Fraction</p>
+            <p className='box-text'>Fraction</p>
             <input
                 type="text"
                 value={odds.fractionText}
@@ -138,7 +134,7 @@ function Calculator (){
             />
         </div>
         <div style={{ margin: 'auto' }}>
-            <p style = {boxText}>Percent</p>
+            <p className='box-text'>Percent</p>
             <input
                 type="number"
                 value={truncateValue(odds.percent, 2)}

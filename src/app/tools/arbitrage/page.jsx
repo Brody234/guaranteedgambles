@@ -9,13 +9,17 @@ import { format, isToday, isThisWeek, addDays, isAfter } from 'date-fns';
 import arrow from '../../../images/arrow.png'
 import Image from 'next/image';
 import { useOpp } from '@/contexts/arbitragecontext';
+import { SP } from 'next/dist/shared/lib/utils';
 
 export default function Arb() {
     const {user, isLoading, token} = useAuth()
     const [droppedDown, setDroppedDown] = useState([])
     const router = useRouter()
     const [region, setRegion] = useState('');
+    const [error, setError] = useState(false)
+    const [oppLoad, setOppLoad] = useState(false)
     const {opportunities, setOpportunities} = useOpp()
+    const [outRegion, setOutRegion] = useState(false)
     const [isDisabled, setIsDisabled] = useState(false);
 
     const disable = () => {
@@ -31,12 +35,24 @@ export default function Arb() {
     };
 
     const arb = async ()=>{
-      console.log("arb")
         if (token && region){
+            setError(false)
+            setOppLoad(true)
+            setOutRegion(false)
             console.log("call")
-            const data = await newRequest.get('/arbitrage/'+region, token)
-            console.log(data)
-            setOpportunities(data.opportunities.sort((a, b)=>b.profit-a.profit))
+            try{
+              const data = await newRequest.get('/arbitrage/'+region, token)
+              console.log(data)
+              setOpportunities(data.opportunities.sort((a, b)=>b.profit-a.profit))
+              setOppLoad(false)  
+            }
+            catch(err){
+              setOppLoad(false)
+              setError(true)
+            }
+        }
+        else if(!region){
+          setOutRegion(true)
         }
     } 
   
@@ -78,7 +94,7 @@ export default function Arb() {
                     </div>
                     <div style = {{width: '60vw', marginTop: '1em', display: "flex", alignItems: 'center', justifyContent: 'space-between'}}>
                         <div style = {{display: 'flex'}}>
-                            <select value={region} className = "select-region" onChange={handleChange}>
+                            <select value={region} className = "select-region" style = {{border: !outRegion? "" : "1px red solid"}} onChange={handleChange}>
                                 <option value="">Select A Region</option>
                                 <option value="us">US</option>
                                 <option value="uk">UK</option>
@@ -94,11 +110,14 @@ export default function Arb() {
                 </div>
                 <div>
                     <h2 className = "probable-text">Probable Arbitrage Opportunities</h2>
-                    {opportunities && opportunities.length >0 && opportunities?.map((val, i)=>{
-                        return(
-                            <Arbitrage opportunity={val} key = {i} index = {i} dropDown={dropDown} droppedDown = {droppedDown}/>
-                        )
-                    })}
+                    {error? <div style = {{width: '80vw', marginRight: '10vw', marginLeft: '10vw'}}><p>We have encountered an error trying to find arbitrage data. Please try again in a few minutes. If this becomes a recurring issue, help us become aware by reporting it to info@guaranteedgambles.com.</p></div> : <div>{
+                      !oppLoad? <div>
+                      {opportunities && opportunities.length >0 && opportunities?.map((val, i)=>{
+                          return(
+                              <Arbitrage opportunity={val} key = {i} index = {i} dropDown={dropDown} droppedDown = {droppedDown}/>
+                          )
+                      })}</div> : <div style = {{width: '100vw', display: 'flex', justifyContent: 'center'}}><Spinner /></div>
+                    }</div>}
                 </div>
             </div>
             <Footer />
@@ -135,7 +154,9 @@ function Arbitrage({ opportunity, index, dropDown, droppedDown }) {
       }
     };
   
-  
+    useEffect(()=>{
+      console.log(opportunity)
+    }, [opportunity])
     const dropdownStyle = {
       maxHeight: maxHeight,
       overflow: 'hidden',
@@ -161,6 +182,7 @@ function Arbitrage({ opportunity, index, dropDown, droppedDown }) {
               <Bet bet={opportunity.bets[0]} price={price} />
               <Bet bet={opportunity.bets[1]} price={price} />
             </div>
+            <p>Sport: {opportunity.sport}</p>
             <div style = {{display: 'flex', width: '100%', justifyContent: "space-between"}}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                 <p>Price: </p>
@@ -183,13 +205,21 @@ function Arbitrage({ opportunity, index, dropDown, droppedDown }) {
         <p >Site: {bet.site}</p>
         <p>Side: {bet.side}</p>
         <p>Odds: {bet.odds}</p>
-        <p>Type: {bet.type}</p>
+        <p>Type: {formatString(bet.type)}</p>
         <p>Amount: ${(price*bet.share).toFixed(2)}</p>
       </div>
     );
   }
   
-  
+  const formatString = (str) =>{
+    if(str == 'h2h'){
+      return 'Head to head'
+    }
+    else if (str == 'totals'){
+      return 'Over Under'
+    }
+    else return str
+  }
 const formatDate = (date) => {
     const now = new Date();
     const matchDate = new Date(date);
@@ -203,4 +233,8 @@ const formatDate = (date) => {
     } else {
         return format(matchDate, 'EEEE p'); // Format as Day of the week and time
     }
+};
+
+const Spinner = () => {
+  return <div className="spinner-opp-load"></div>;
 };
