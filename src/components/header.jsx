@@ -2,6 +2,9 @@
 import { useRouter, usePathname } from "next/navigation"
 import { useAuth } from "@/contexts/authcontext"
 import { useState, useEffect } from "react"
+import dynamic from 'next/dynamic';
+
+const CheckDimensions = dynamic(() => import('@/components/checkdimensions'), { ssr: false });
 
 export default function Header() {
 
@@ -71,6 +74,8 @@ export default function Header() {
                     <p>Log Out</p>
                 </button>
             </div>            
+            <CheckDimensions setIsHeightLessThanWidth={setIsHeightLessThanWidth} />
+
         </div>
     )
 }
