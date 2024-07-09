@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import Footer from '@/components/footer';
 import { useAuth } from '@/contexts/authcontext';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import FadeInSection from '@/components/fade';
 import PageWrapper from '@/components/pagewrapper';
 import { useAff } from '@/contexts/affiliationcontext';
