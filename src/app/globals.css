@@ -346,6 +346,12 @@ html, body {
 .selected-plan {
   border-radius: .1em;
   border-bottom: 2px solid #2ecc71;
+  color: #ffffff;
+  padding: 5px;
+  background-color: #999;
+}
+.non-selected-plan {
+  color: #aaaaaa;
 }
 
 .join-title {

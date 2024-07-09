@@ -33,13 +33,14 @@ export default function Home() {
   }, []);
 
   const check = async () => {
-    while(!user.subscribed){
+    for(let i = 0; i < 3; i++){
       const newU = await newRequest.get('/stripe/check', token)
       console.log("newU")
       console.log(newU)
       if(newU && newU.user && newU.user.subscribed){
         login(newU.user, token)
         setPushReady(true)
+        break
       }
       else{
         await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 5 seconds
@@ -93,6 +94,7 @@ export default function Home() {
       }
       else if(monthly){
         session = await newRequest.get('/stripe/subscribe/monthly', token)
+        console.log(session.body)
         if(!checkAlready(session)){
           router.push(session.url.url)
         }
@@ -197,9 +199,10 @@ export default function Home() {
                 <div style = {{textAlign: 'center'}}>            
                   <h1 className = "join-title">Join Us</h1>
                   <p>${!monthly? "15" : "20"}/month billed {!monthly? "annually" : "monthly"}</p>
+                  {!monthly&& <p style = {{color: '#dd1111'}}>25% DISCOUNT</p>}
                   <div>
-                    <button onClick = {()=>setMonthly(true)} className = {`monthly-annual ${monthly? "selected-plan" : ""}`}>Monthly Plan</button>
-                    <button onClick = {()=>setMonthly(false)} className = {`monthly-annual ${!monthly? "selected-plan" : ""}`}>Annual Plan</button>
+                    <button onClick = {()=>setMonthly(true)} className = {`monthly-annual ${monthly? "selected-plan" : "non-selected-plan"}`}>Monthly Plan</button>
+                    <button onClick = {()=>setMonthly(false)} className = {`monthly-annual ${!monthly? "selected-plan" : "non-selected-plan"}`}>Annual Plan</button>
                   </div>
                 </div>
                 <h2 className = "perks-title">Perks</h2>

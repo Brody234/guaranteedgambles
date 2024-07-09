@@ -1,4 +1,6 @@
-const baseURL = "http://localhost:4444";
+const live = true
+
+const baseURL = live? "https://guaranteedgambles-4671d37f785e.herokuapp.com" : "http://localhost:4444";
 
 const newRequest = {
   baseUrl: baseURL,
@@ -33,6 +35,8 @@ const newRequest = {
     }
   },
   post: async function (str, options = {}, token = null) {
+    console.log('base url')
+    console.log(baseURL)
     const headers = this.setHeaders(token);
     const body = options ? options : null;
     try {
