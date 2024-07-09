@@ -29,7 +29,7 @@ export default function Header() {
         window.removeEventListener('resize', handleResize);
       };
     }
-    }, []);*/
+    }, []);
   
   
 
@@ -45,7 +45,7 @@ export default function Header() {
         return () => {
           window.removeEventListener('resize', checkDimensions);
         };
-      }, []);
+      }, []);*/
 
     const headerListItem = {
         paddingRight: "2em",
