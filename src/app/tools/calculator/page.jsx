@@ -4,6 +4,10 @@ import Header from '@/components/header';
 import React, { useEffect, useState } from 'react';
 import { fractionToString, parseFraction, americanToAll, decimalToAll, fractionToAll, percentToAll} from './calculations'
 import { useAuth } from '@/contexts/authcontext';
+import dynamic from 'next/dynamic';
+
+const CheckDimensions = dynamic(() => import('@/components/checkdimensions'), { ssr: false });
+
 
 export default function Calc() {
     const [isHeightLessThanWidth, setIsHeightLessThanWidth] = useState(false);
@@ -16,7 +20,7 @@ export default function Calc() {
         }
     }, [user, isLoading])
 
-    useEffect(() => {
+    /*useEffect(() => {
       if (typeof window !== 'undefined') {
 
         const checkDimensions = () => {
@@ -31,7 +35,7 @@ export default function Calc() {
           window.removeEventListener('resize', checkDimensions);
         };
     }
-      }, []);
+      }, []);*/
 
     return (
         <div className = 'main-container' style={{ width: '100vw' }}>
@@ -45,7 +49,9 @@ export default function Calc() {
                 </div>
                 <Calculator />
             </div>
+            
             <Footer />
+            <CheckDimensions setIsHeightLessThanWidth={setIsHeightLessThanWidth} />
         </div>
     );
 }
