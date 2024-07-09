@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 const CheckDimensions = ({ setIsHeightLessThanWidth }) => {
     useEffect(() => {
+        if(typeof window !== 'undefined'){
         const checkDimensions = () => {
             const { innerHeight, innerWidth } = window;
             setIsHeightLessThanWidth(innerHeight < innerWidth);
@@ -13,6 +14,7 @@ const CheckDimensions = ({ setIsHeightLessThanWidth }) => {
         return () => {
             window.removeEventListener('resize', checkDimensions);
         };
+    }
     }, [setIsHeightLessThanWidth]);
 
     return null;
