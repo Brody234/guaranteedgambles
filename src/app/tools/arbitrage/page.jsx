@@ -6,10 +6,10 @@ import { useRouter } from 'next/navigation';
 import Footer from '@/components/footer';
 import newRequest from '@/utils/newRequest';
 import { format, isToday, isThisWeek, addDays, isAfter } from 'date-fns';
-import arrow from '../../../images/arrow.png'
-import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { useOpp } from '@/contexts/arbitragecontext';
-import { SP } from 'next/dist/shared/lib/utils';
+
+const CheckDimensions = dynamic(() => import('@/components/checkdimensions'), { ssr: false });
 
 export default function Arb() {
     const {user, isLoading, token} = useAuth()
@@ -138,6 +138,7 @@ export default function Arb() {
                 </div>
             </div>
             <Footer />
+            <CheckDimensions setIsHeightLessThanWidth={setIsHeightLessThanWidth} />
         </div>
     );
 }
