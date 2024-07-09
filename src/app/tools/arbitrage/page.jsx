@@ -23,7 +23,7 @@ export default function Arb() {
     const [isDisabled, setIsDisabled] = useState(false);
     const [isHeightLessThanWidth, setIsHeightLessThanWidth] = useState(false);
 
-    useEffect(() => {
+    /*useEffect(() => {
       if (window) {
         const checkDimensions = () => {
             const { innerHeight, innerWidth } = window;
@@ -37,7 +37,7 @@ export default function Arb() {
             window.removeEventListener('resize', checkDimensions);
         };
     }
-  }, []);
+  }, []);*/
 
     const disable = () => {
       setIsDisabled(true);
