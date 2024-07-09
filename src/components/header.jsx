@@ -15,7 +15,7 @@ export default function Header() {
 
     const [isBelowThreshold, setIsBelowThreshold] = useState(window.innerWidth < 550);
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (typeof window !== 'undefined') {
 
       const handleResize = () => {
@@ -29,7 +29,7 @@ export default function Header() {
         window.removeEventListener('resize', handleResize);
       };
     }
-    }, []);
+    }, []);*/
   
   
 
