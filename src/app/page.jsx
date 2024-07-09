@@ -63,6 +63,8 @@ export default function Home() {
   }, [checkSession, token])
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+
     const checkDimensions = () => {
       const { innerHeight, innerWidth } = window;
       setIsHeightLessThanWidth(innerHeight < innerWidth);
@@ -74,6 +76,7 @@ export default function Home() {
     return () => {
       window.removeEventListener('resize', checkDimensions);
     };
+  }
   }, []);
 
   const checkAlready = (session) => {

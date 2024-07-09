@@ -24,18 +24,20 @@ export default function Arb() {
     const [isHeightLessThanWidth, setIsHeightLessThanWidth] = useState(false);
 
     useEffect(() => {
+      if (typeof window !== 'undefined') {
         const checkDimensions = () => {
-          const { innerHeight, innerWidth } = window;
-          setIsHeightLessThanWidth(innerHeight < innerWidth);
+            const { innerHeight, innerWidth } = window;
+            setIsHeightLessThanWidth(innerHeight < innerWidth);
         };
-    
+
         checkDimensions();
         window.addEventListener('resize', checkDimensions);
-    
+
         return () => {
-          window.removeEventListener('resize', checkDimensions);
+            window.removeEventListener('resize', checkDimensions);
         };
-      }, []);
+    }
+  }, []);
 
     const disable = () => {
       setIsDisabled(true);

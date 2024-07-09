@@ -44,17 +44,20 @@ export default function Affiliates() {
     }
 
     useEffect(() => {
-      const checkDimensions = () => {
-        const { innerHeight, innerWidth } = window;
-        setIsHeightLessThanWidth(innerHeight < innerWidth);
-      };
-  
-      checkDimensions();
-      window.addEventListener('resize', checkDimensions);
-  
-      return () => {
-        window.removeEventListener('resize', checkDimensions);
-      };
+      if (typeof window !== 'undefined') {
+
+        const checkDimensions = () => {
+            const { innerHeight, innerWidth } = window;
+            setIsHeightLessThanWidth(innerHeight < innerWidth);
+        };
+    
+        checkDimensions();
+        window.addEventListener('resize', checkDimensions);
+    
+        return () => {
+            window.removeEventListener('resize', checkDimensions);
+        };
+      }
     }, []);
     
     const adaptableMoneyBox = {

@@ -17,6 +17,8 @@ export default function Calc() {
     }, [user, isLoading])
 
     useEffect(() => {
+      if (typeof window !== 'undefined') {
+
         const checkDimensions = () => {
           const { innerHeight, innerWidth } = window;
           setIsHeightLessThanWidth(innerHeight < innerWidth);
@@ -28,6 +30,7 @@ export default function Calc() {
         return () => {
           window.removeEventListener('resize', checkDimensions);
         };
+    }
       }, []);
 
     return (
