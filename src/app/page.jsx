@@ -12,7 +12,7 @@ import PageWrapper from '@/components/pagewrapper';
 import { useAff } from '@/contexts/affiliationcontext';
 import newRequest from '@/utils/newRequest';
 
-export default function Home() {
+function Home() {
   const router = useRouter()
   const {user, token, logout, login} = useAuth()
   const [monthly, setMonthly] = useState(false)
@@ -228,3 +228,13 @@ export default function Home() {
     </div>
   );
 }
+
+const WrappedHomePage = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Home />
+    </Suspense>
+  );
+};
+
+export default WrappedHomePage
