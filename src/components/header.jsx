@@ -13,9 +13,9 @@ export default function Header() {
     const { logout } = useAuth()
     const [isHeightLessThanWidth, setIsHeightLessThanWidth] = useState(false);
 
-    const [isBelowThreshold, setIsBelowThreshold] = useState(window.innerWidth < 550);
+    const [isBelowThreshold, setIsBelowThreshold] = useState(false);
 
-    /*useEffect(() => {
+    useEffect(() => {
         if (typeof window !== 'undefined') {
 
       const handleResize = () => {
@@ -32,7 +32,7 @@ export default function Header() {
     }, []);
   
   
-
+    /*
     useEffect(() => {
         const checkDimensions = () => {
           const { innerHeight, innerWidth } = window;
