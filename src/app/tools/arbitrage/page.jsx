@@ -24,7 +24,7 @@ export default function Arb() {
     const [isHeightLessThanWidth, setIsHeightLessThanWidth] = useState(false);
 
     useEffect(() => {
-      if (typeof window !== 'undefined') {
+      if (window) {
         const checkDimensions = () => {
             const { innerHeight, innerWidth } = window;
             setIsHeightLessThanWidth(innerHeight < innerWidth);
