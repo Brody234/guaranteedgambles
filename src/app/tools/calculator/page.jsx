@@ -68,7 +68,7 @@ function Calculator (){
 
     const [isHeightLessThanWidth, setIsHeightLessThanWidth] = useState(false);
 
-    useEffect(() => {
+    /*useEffect(() => {
         const checkDimensions = () => {
           const { innerHeight, innerWidth } = window;
           setIsHeightLessThanWidth(innerHeight < innerWidth);
@@ -80,7 +80,7 @@ function Calculator (){
         return () => {
           window.removeEventListener('resize', checkDimensions);
         };
-      }, []);
+      }, []);*/
     
     useEffect(()=>{
         const fractionValue = fractionToString(odds.fraction)
@@ -213,6 +213,7 @@ function Calculator (){
     <div>
         <button className='primary-button' style = {{marginTop: '9vh'}} onClick = {calculate}><p>Calculate</p></button>
     </div>
+    <CheckDimensions setIsHeightLessThanWidth={setIsHeightLessThanWidth} />
 </div>)
 
 }
