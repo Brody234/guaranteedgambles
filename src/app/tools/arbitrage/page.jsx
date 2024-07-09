@@ -17,6 +17,7 @@ export default function Arb() {
     const router = useRouter()
     const [region, setRegion] = useState('');
     const [error, setError] = useState(false)
+    const [notFound, setNotFound] = useState(false)
     const [oppLoad, setOppLoad] = useState(false)
     const {opportunities, setOpportunities} = useOpp()
     const [outRegion, setOutRegion] = useState(false)
@@ -55,17 +56,27 @@ export default function Arb() {
         if (token && region){
             setError(false)
             setOppLoad(true)
+            setNotFound(false)
             setOutRegion(false)
-            console.log("call")
             try{
               const data = await newRequest.get('/arbitrage/'+region, token)
-              console.log(data)
-              setOpportunities(data.opportunities.sort((a, b)=>b.profit-a.profit))
-              setOppLoad(false)  
+              if(data.message == 'no opportunities found' || data.opportunities.length == 0){
+                console.log('here')
+                setNotFound(true)
+                setOppLoad(false)  
+                setOpportunities([])
+              }
+              else{
+                setOpportunities(data.opportunities.sort((a, b)=>b.profit-a.profit))
+                setOppLoad(false)  
+              }
             }
             catch(err){
               setOppLoad(false)
+              setOpportunities([])
+              
               setError(true)
+              
             }
         }
         else if(!region){
@@ -127,6 +138,7 @@ export default function Arb() {
                 </div>
                 <div>
                     <h2 className = "probable-text">Probable Arbitrage Opportunities</h2>
+                    {notFound && <div style = {{width: '80vw', marginRight: '10vw', marginLeft: '10vw'}}><p>Our algorithm was unable to find any arbitrage bets at this time. We are always working to make it more effective, and we have automatically reported this issue. If this becomes a recurring issue, please contact us at info@guaranteedgambles.com. Also note that the best arbitrage opportunities will be found when a game is being played.</p></div> }
                     {error? <div style = {{width: '80vw', marginRight: '10vw', marginLeft: '10vw'}}><p>We have encountered an error trying to find arbitrage data. Please try again in a few minutes. If this becomes a recurring issue, help us become aware by reporting it to info@guaranteedgambles.com.</p></div> : <div>{
                       !oppLoad? <div>
                       {opportunities && opportunities.length >0 && opportunities?.map((val, i)=>{
