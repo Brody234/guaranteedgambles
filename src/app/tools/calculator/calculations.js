@@ -91,7 +91,7 @@ function americanToFraction(american) {
     return fraction
 }
 
-function decimalToAmerican(decimal) {
+export function decimalToAmerican(decimal) {
     if(decimal == 2){
         return 100 
     }

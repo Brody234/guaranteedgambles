@@ -18,7 +18,26 @@ function SignInPage() {
   const [loginfo, setLoginfo] = useState({email: "", password: "", confirmPassword: "", phoneNumber: "", iagreetotos: false})
   const [isSignup, setIsSignup] = useState(true);
   const {token, user, login} = useAuth()
+  const [isHeightLessThanWidth, setIsHeightLessThanWidth] = useState(false)
   
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+
+    const checkDimensions = () => {
+      const { innerHeight, innerWidth } = window;
+      setIsHeightLessThanWidth(innerHeight < innerWidth);
+    };
+
+    checkDimensions();
+    window.addEventListener('resize', checkDimensions);
+
+    return () => {
+      window.removeEventListener('resize', checkDimensions);
+    };
+  }
+  }, []);
+
+
   useEffect(()=>{
     console.log(monthly)
   }, [monthly])
@@ -119,16 +138,16 @@ function SignInPage() {
   return (
     <div className = "main-container">
         <div  style = {{width: '100vw', height: '100vh', display: 'flex', justifyContent: 'space-between'}} id="signup">
-            <div style = {{width: '40vw'}}>
+            <div style = {{width: isHeightLessThanWidth? '40vw' : '90vw', marginRight: isHeightLessThanWidth? '0' : '5vw', marginLeft: isHeightLessThanWidth? '0' : '5vw'}}>
                 <div style = {{width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                     <div className = 'log-text-case'> 
                       <h1 className='log-text'>{isSignup? "Sign Up" : "Log In"}</h1>
                     </div>
-                    <input placeholder = "Email" value = {loginfo.email} onChange={(e)=>updateLoginfo("email", e.target.value)} className='login-box'></input>
+                    <input placeholder = "Email" value = {loginfo.email} onChange={(e)=>updateLoginfo("email", e.target.value)} className='login-box' style = {{width: isHeightLessThanWidth? '50%':'80%'}}></input>
                     {isSignup? <><p></p>
-                    <input  placeholder = "Phone Number (optional)" value = {loginfo.phoneNumber || ""} onChange={(e)=>updateLoginfo("phoneNumber", e.target.value)} className='login-box'></input>
+                    <input  placeholder = "Phone Number (optional)" value = {loginfo.phoneNumber || ""} onChange={(e)=>updateLoginfo("phoneNumber", e.target.value)} className='login-box' style = {{width: isHeightLessThanWidth? '50%':'80%'}}></input>
                     </>:''}
-                    <input placeholder = "Password" type = "password" value = {loginfo.password} onChange={(e)=>updateLoginfo("password", e.target.value)} className='login-box'></input>
+                    <input placeholder = "Password" type = "password" value = {loginfo.password} onChange={(e)=>updateLoginfo("password", e.target.value)} className='login-box' style = {{width: isHeightLessThanWidth? '50%':'80%'}}></input>
                     {isSignup && (
                       <>
                         <input
@@ -137,7 +156,8 @@ function SignInPage() {
                           type = "password"
                           placeholder='Confirm Password'
                           onChange={(e) => updateLoginfo("confirmPassword", e.target.value)}
-                          style={{ borderColor: match ? '#00000000' : 'red', borderWidth: '1px', borderStyle: 'solid' }}
+                          style={{ borderColor: match ? '#00000000' : 'red', borderWidth: '1px', borderStyle: 'solid', width: isHeightLessThanWidth? '50%':'80%'}}
+                          
                         />
                       </>
                     )}
@@ -149,8 +169,8 @@ function SignInPage() {
                         checked={loginfo.iagreetotos} 
                         onChange={(e) => updateLoginfo("iagreetotos", !loginfo.iagreetotos)} 
                       />
-                    <label style = {{color: agree? 'white' : 'red'}}>
-                          I have read and agree to the <a href="/termsofuse" target="_blank" rel="noopener noreferrer">terms of use</a>.
+                    <label onClick={()=>router.push('/termsofuse')} style = {{color: agree? 'white' : 'red'}}>
+                          I have read and agree to the terms of use.
                         </label>
                       </div>: 
                     <></>}
@@ -158,9 +178,10 @@ function SignInPage() {
                     {isSignup? <button onClick = {()=>setIsSignup(false)} className = 'switch-logtype-text'><p>Already have an account? Log in.</p></button> : <button onClick = {()=>setIsSignup(true)} className = 'switch-logtype-text'><p>Need an account? Sign up.</p></button>}
                 </div>
             </div>
+            {isHeightLessThanWidth&&
             <div style = {{ width: '50vw', marginTop: '0vh'}}>
                 <Image className = "messi" style = {{height: '100vh', width: 'auto'}} src = {messi} alt = "Lionel Messi, license details and download accessible below, from Wikipedia Commons"></Image>
-            </div>
+            </div>}
         </div>
         <Footer />
     </div>

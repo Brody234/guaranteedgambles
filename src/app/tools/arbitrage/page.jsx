@@ -8,6 +8,7 @@ import newRequest from '@/utils/newRequest';
 import { format, isToday, isThisWeek, addDays, isAfter } from 'date-fns';
 import dynamic from 'next/dynamic';
 import { useOpp } from '@/contexts/arbitragecontext';
+import {decimalToAmerican} from '../calculator/calculations'
 
 const CheckDimensions = dynamic(() => import('@/components/checkdimensions'), { ssr: false });
 
@@ -234,7 +235,7 @@ function Arbitrage({ opportunity, index, dropDown, droppedDown }) {
         <p><strong>Bet {bet.number}</strong></p>
         <p >Site: {bet.site}</p>
         <p>Side: {bet.side}</p>
-        <p>Odds: {bet.odds}</p>
+        <p>Odds: {decimalToAmerican(bet.odds)}</p>
         <p>Type: {formatString(bet.type)}</p>
         <p>Amount: ${(price*bet.share).toFixed(2)}</p>
       </div>

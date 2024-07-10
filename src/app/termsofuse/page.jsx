@@ -1,6 +1,11 @@
+'use client'
+import { useRouter } from "next/navigation"
+
 export default function TermsOfUse() {
+    const router = useRouter()
     return(
-        <div>
+        <div className="main-container" onClick={()=>router.back()}>
+            <button className="primary-button"><p>Back</p></button>
             <h3>
             <span class="c0 c10">Terms of Use for guaranteedgambles.com</span>
             </h3>

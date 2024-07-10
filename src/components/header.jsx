@@ -21,7 +21,7 @@ export default function Header() {
       const handleResize = () => {
         setIsBelowThreshold(window.innerWidth < 550);
       };
-  
+      handleResize()
       window.addEventListener('resize', handleResize);
   
       // Cleanup the event listener on component unmount
