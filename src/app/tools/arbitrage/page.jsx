@@ -235,7 +235,7 @@ function Arbitrage({ opportunity, index, dropDown, droppedDown }) {
         <p><strong>Bet {bet.number}</strong></p>
         <p >Site: {bet.site}</p>
         <p>Side: {bet.side}</p>
-        <p>Odds: {decimalToAmerican(bet.odds)}</p>
+        <p>Odds: {decimalToAmerican(bet.odds).toFixed(2)}</p>
         <p>Type: {formatString(bet.type)}</p>
         <p>Amount: ${(price*bet.share).toFixed(2)}</p>
       </div>
