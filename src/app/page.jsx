@@ -24,13 +24,18 @@ function Home() {
   const { affiliate, setAffiliate } = useAff()
 
   useEffect(() => {
-    
     console.log("effecting")
-    if (affiliateId && affiliateId != affiliate) {
+    if (affiliateId && affiliateId != affiliate ) {
         setAffiliate(affiliateId)
         logClick(affiliateId);
     }
   }, []);
+
+  useEffect(()=>{
+    console.log("aff")
+    console.log(affiliate)
+  }, [affiliate])
+
 
   const check = async () => {
     for(let i = 0; i < 3; i++){

@@ -1,4 +1,4 @@
-const live = true
+const live = false
 
 const baseURL = live? "https://guaranteedgambles-4671d37f785e.herokuapp.com" : "http://localhost:4444";
 

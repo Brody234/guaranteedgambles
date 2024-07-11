@@ -3,23 +3,22 @@ import { createContext, useState, useContext, useEffect } from 'react';
 const AffContext = createContext();
 
 export const AffProvider = ({ children }) => {
-  const [affiliate, setAffiliateId] = useState({});
+  const [affiliate, setAffiliateId] = useState("");
 
   const setAffiliate = (val) => {
     setAffiliateId(val)
-    localStorage.setItem('affiliate', JSON.stringify(val));
+    localStorage.setItem('affiliate', val);
   }
 
   useEffect(() => {
 
     let savedAffiliate = localStorage.getItem('affiliate');
-    if (savedAffiliate != "undefined") savedAffiliate = JSON.parse(savedAffiliate)
 
     if (savedAffiliate) {
       setAffiliateId(savedAffiliate);
     }
     else{
-      setAffiliateId({})
+      setAffiliateId("")
     }
   }, []);
 

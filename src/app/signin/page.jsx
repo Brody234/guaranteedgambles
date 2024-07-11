@@ -6,16 +6,18 @@ import Image from 'next/image';
 import Footer from '@/components/footer';
 import { useAuth } from '@/contexts/authcontext';
 import newRequest from '@/utils/newRequest';
+import { useAff } from '@/contexts/affiliationcontext';
 
 function SignInPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const action = searchParams.get('action');
   const stripe = searchParams.get('stripe')
+  const {affiliate} = useAff()
   const monthly = searchParams.get('monthly')
   const [match, setMatch] = useState(true)
   const [agree, setAgree] = useState(true)
-  const [loginfo, setLoginfo] = useState({email: "", password: "", confirmPassword: "", phoneNumber: "", iagreetotos: false})
+  const [loginfo, setLoginfo] = useState({email: "", password: "", confirmPassword: "", phoneNumber: "", iagreetotos: false, code: affiliate })
   const [isSignup, setIsSignup] = useState(true);
   const {token, user, login} = useAuth()
   const [isHeightLessThanWidth, setIsHeightLessThanWidth] = useState(false)
@@ -37,10 +39,9 @@ function SignInPage() {
   }
   }, []);
 
-
   useEffect(()=>{
-    console.log(monthly)
-  }, [monthly])
+    updateLoginfo('code', affiliate)
+  }, [affiliate])
 
   const updateLoginfo = (property, val) => {
     setLoginfo(prevLoginfo => ({
@@ -60,7 +61,6 @@ function SignInPage() {
 
   const checkout = async () =>{
     let session
-    console.log(monthly)
     if(monthly == "true"){
       session = await newRequest.get('/stripe/subscribe/monthly', token)
     }
@@ -91,7 +91,6 @@ function SignInPage() {
   const loginButton = async () => {
     try{
       const data = await newRequest.post('/user/login', {logname: loginfo.email, password: loginfo.password})
-      console.log(data)
       login(data.user, data.token)
     }
     catch(err){
@@ -116,8 +115,7 @@ function SignInPage() {
     }
 
     try{
-      const data = await newRequest.post('/user/new', {email: loginfo.email, newPassword: loginfo.password, phoneNumber: loginfo.phoneNumber, iagreetotos: loginfo.iagreetotos})
-      console.log(data)
+      const data = await newRequest.post('/user/new', {email: loginfo.email, newPassword: loginfo.password, phoneNumber: loginfo.phoneNumber, iagreetotos: loginfo.iagreetotos, code: loginfo.code})
       login(data.user, data.token)
     }
     catch(err){
@@ -127,7 +125,6 @@ function SignInPage() {
 
 
   useEffect(() => {
-    console.log(action)
     if (action === 'signup') {
       setIsSignup(true);
     } else {

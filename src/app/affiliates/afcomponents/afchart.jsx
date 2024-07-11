@@ -29,7 +29,7 @@ const MonthChart = ({clicks, signups}) => {
         datasets: [
           {
             label: 'Sign Ups',
-            data: Array.from({ length: 30 }, () => Math.floor(Math.random() * 100)),
+            data: signups.map((val, i)=>val.count),
             fill: false,
             borderColor: 'rgba(46, 204, 113, 0.5)',
             tension: 0.1,

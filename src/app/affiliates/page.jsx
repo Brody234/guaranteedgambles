@@ -10,6 +10,8 @@ export default function Affiliates() {
     const {user, token, affiliateData, setAfData, login} = useAuth()
     const [isHeightLessThanWidth, setIsHeightLessThanWidth] = useState(false);
     const [code, setCode] = useState('')
+    const [agreed, setAgreed] = useState(false)
+    const [join, setJoin] = useState(true)
     const router = useRouter()
 
     const refresh = async () =>{
@@ -30,6 +32,11 @@ export default function Affiliates() {
     const jointoday = async () => {
         if(!user){
             router.push('/signin')
+            return
+        }
+        else if(!agreed){
+            setJoin(false)
+            return
         }
         else{
             try{
@@ -73,11 +80,6 @@ export default function Affiliates() {
     }
 
 
-    if(true){
-        return(<div>
-            
-        </div>)
-    }
 
     if(!user || !user.affiliateId){
         return(
@@ -88,6 +90,19 @@ export default function Affiliates() {
                     <div>
                         <input placeholder = "Code" value={code} onChange={(e)=>setCode(e.target.value)} className = "login-box" style = {{height: '5vh', width: '10vw', marginLeft: '8vw', minWidth: '100px' }}></input>
                         <button className='primary-button'  style = {{marginTop: '4vh', marginLeft: '4vw', marginRight: '8vw'}} onClick = {jointoday}><p>Join Today</p></button>
+
+                        <div style={{ marginBottom: '1em', display: 'flex', alignItems: 'center' }}> 
+                            <input 
+                                type="checkbox" 
+                                required 
+                                style = {{marginRight: '.5em', marginLeft: '8vw'}}
+                                checked={agreed} 
+                                onChange={(e) => setAgreed(!agreed)} 
+                            />
+                            <label onClick={()=>router.push('/affiliatetos')} style = {{color: join? 'white' : 'red'}}>
+                                I have read and agree to the terms of use.
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <Footer />
@@ -101,18 +116,18 @@ export default function Affiliates() {
             <div style = {{display: 'flex', width: '100vw', justifyContent: 'space-around', marginTop: '3em', flexDirection: isHeightLessThanWidth? 'row': 'column'}}>
                 <div className = "affiliate-box" style = {{backgroundColor: '#dd8844', ...adaptableMoneyBox}} >
                     <h3 style = {{...adaptableMoneyBoxH3}}>Pending Sales</h3>
-                    <p className="affiliate-money" style = {{...adaptableMoneyBoxMoney}} >${affiliateData.pendingSales}</p>
+                    <p className="affiliate-money" style = {{...adaptableMoneyBoxMoney}} >${affiliateData?.pendingFunds.toFixed(2) || 0}</p>
                 </div>
                 <div className="affiliate-box" style = {{backgroundColor: "#33c390", ...adaptableMoneyBox}}>
                     <h3 style = {{...adaptableMoneyBoxH3}}>Approved Sales</h3>
-                    <p className="affiliate-money" style = {{...adaptableMoneyBoxMoney}}>${affiliateData.approvedSales}</p>
+                    <p className="affiliate-money" style = {{...adaptableMoneyBoxMoney}}>${0}</p>
                 </div>
                 <div className="affiliate-box" style = {{backgroundColor: '#bb39cc', ...adaptableMoneyBox}}>
                     <h3 style = {{...adaptableMoneyBoxH3}}>Ready To Pay</h3>
-                    <p className="affiliate-money" style = {{...adaptableMoneyBoxMoney}}>${affiliateData.paySales}</p>
+                    <p className="affiliate-money" style = {{...adaptableMoneyBoxMoney}}>${0}</p>
                 </div>
             </div>
-            <MonthChart signups = {affiliateData.signups} clicks = {getLast30DaysData(affiliateData.clicks)}/>
+            <MonthChart signups = {getLast30DaysData(affiliateData?.signs)} clicks = {getLast30DaysData(affiliateData?.clicks)}/>
             </div>
             <Footer />
         </div>
@@ -128,8 +143,21 @@ function getLast30DaysData(dataArray) {
         return date.toISOString().split('T')[0];
     }
 
-    // Create a map from the input data for quick lookup
-    const dataMap = new Map(dataArray.map(item => [formatDate(new Date(item.date)), item.count]));
+    // Aggregate counts for each date
+    const aggregatedData = {};
+    if (Array.isArray(dataArray)) {
+        dataArray.forEach(item => {
+            const date = formatDate(new Date(item.date));
+            if (aggregatedData[date]) {
+                aggregatedData[date] += item.count;
+            } else {
+                aggregatedData[date] = item.count;
+            }
+        });
+    }
+
+    // Create a map from the aggregated data
+    const dataMap = new Map(Object.entries(aggregatedData));
 
     // Loop through the last 30 days
     for (let i = 29; i >= 0; i--) {
@@ -145,4 +173,3 @@ function getLast30DaysData(dataArray) {
 
     return result;
 }
-
