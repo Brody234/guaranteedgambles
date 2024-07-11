@@ -1,7 +1,7 @@
 'use client'
 import { useRouter } from "next/navigation"
 
-export default function affTOS(){
+export default function AffTOS(){
 const router = useRouter()
 
 
