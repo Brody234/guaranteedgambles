@@ -216,7 +216,6 @@ function Home() {
                 <h2 className = "perks-title">Perks</h2>
                 <p className='perks-text'>- Access to the current (beta) version of our arbitrage bets searcher</p>
                 <p className='perks-text'>- Access to our odds calculator</p>
-                <p className='perks-text'>- Access to our discord server to connect with like minded smart gamblers</p>
                 <button className='join-button' onClick = {join}><p>Join Now</p></button>
               </div>
             </div>
