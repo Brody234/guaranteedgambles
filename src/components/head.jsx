@@ -8,8 +8,7 @@ const CustomHead = () => (
       <meta name="description" content="The best site for finding arbitrage trades." />
       <link rel="icon" href="/favicon.ico" />
       <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
-    </Head>
-    <Script async src="https://www.googletagmanager.com/gtag/js?id=AW-16641151078" strategy="afterInteractive"></Script>
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=AW-16641151078" strategy="afterInteractive"></Script>
     <Script id="google-analytics" strategy="afterInteractive">
       {`
         window.dataLayer = window.dataLayer || [];
@@ -19,6 +18,8 @@ const CustomHead = () => (
         gtag('config', 'AW-16641151078');
       `}
     </Script>
+
+    </Head>
   </>
 );
 
