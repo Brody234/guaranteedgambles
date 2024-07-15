@@ -1,11 +1,12 @@
 'use client'
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import Footer from '@/components/footer';
 
 const PrivacyPolicy = () => {
     const router = useRouter()
   return (
-    <div>
+    <div className='main-container'>
         <button className='primary-button' onClick={()=>router.back()}><p>Back</p></button>
         <main>
         <h1>Privacy Policy for Guaranteed Gambles</h1>
@@ -95,11 +96,11 @@ const PrivacyPolicy = () => {
           </p>
           <address>
             Gamer Coach LLC<br />
-            Email: <a href="mailto:brodymassad@gmail.com">brodymassad@gmail.com</a><br />
-            Phone: [Your phone number]
+            Email: <a href="mailto:info@guaranteedgambles.com">info@guaranteedgambles.com</a><br />
           </address>
         </section>
       </main>
+      <Footer />
     </div>
   );
 };
