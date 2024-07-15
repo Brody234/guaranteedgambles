@@ -7,14 +7,14 @@ const PrivacyPolicy = () => {
   return (
     <div>
         <button className='primary-button' onClick={()=>router.back()}><p>Back</p></button>
-      <main>
+        <main>
         <h1>Privacy Policy for Guaranteed Gambles</h1>
         <p>Effective Date: [Date]</p>
 
         <section>
           <h2>1. Introduction</h2>
           <p>
-            Welcome to Guaranteed Gambles, operated by Gamer Coach LLC ("we," "us," or "our"). We are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, <a href="https://guaranteedgambles.com">guaranteedgambles.com</a> (the "Site"). Please read this Privacy Policy carefully. If you do not agree with the terms of this Privacy Policy, please do not access the Site.
+            Welcome to Guaranteed Gambles, operated by Gamer Coach LLC (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;). We are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, <a href="https://guaranteedgambles.com">guaranteedgambles.com</a> (the &quot;Site&quot;). Please read this Privacy Policy carefully. If you do not agree with the terms of this Privacy Policy, please do not access the Site.
           </p>
         </section>
 
