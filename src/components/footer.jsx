@@ -15,6 +15,9 @@ export default function Footer() {
     const affTos = () => {
         router.push('/affiliatetos')
     }
+    const privacy = () =>{
+        router.push('/privacypolicy')
+    }
 
     return(
         <div style = {{width: '100vw', borderTop: '1px solid #555555dd', display: 'flex', justifyContent: 'space-between'}}>
@@ -28,6 +31,7 @@ export default function Footer() {
             <div style = {{marginRight: '20vw', marginTop: '2vh', display: 'flex', flexDirection: 'column', gap: '.5em', width: '15vw', textAlign: 'center'}}>
                 <p className="footer-text" style = {{fontSize: '.8em'}}>Product by Gamer Coach LLC</p>
                 <p className="footer-text" style = {{fontSize: '.8em'}}>Support at info@guaranteedgambles.com</p>
+                <button className="footer-button" style = {{fontSize: '.8em'}} onClick = {privacy}><p>Privacy Policy</p></button>
                 <button className="footer-button" style = {{fontSize: '.8em'}} onClick = {affTos}><p>Affiliate TOS</p></button>
 
             </div>
