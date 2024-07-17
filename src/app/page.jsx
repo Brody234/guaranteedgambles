@@ -26,6 +26,18 @@ function Home() {
   const pathname = usePathname();
 
   useEffect(() => {
+    // This will ensure that the stripe-pricing-table element is properly rendered
+    const script = document.createElement('script');
+    script.src = 'https://js.stripe.com/v3/pricing-table.js';
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+
+  useEffect(() => {
     if(window !== null){
       const hash = window.location.hash;
       if (hash) {
@@ -116,20 +128,10 @@ function Home() {
       if(!token){
         router.push(`/signin?action=signup&stripe=true&monthly=${monthly}`)
       }
-      else if(monthly){
-        session = await newRequest.get('/stripe/subscribe/monthly', token)
-        console.log(session.body)
-        if(!checkAlready(session)){
-          router.push(session.url.url)
-        }
-
+      else {
+        router.push('/pricing')
       }
-      else{
-        session = await newRequest.get('/stripe/subscribe/yearly', token)
-        if(!checkAlready(session)){
-          router.push(session.url.url)
-        }      
-      }
+      
     
     }
     catch(err){
@@ -150,6 +152,7 @@ function Home() {
       check()
     }
     else{
+      check()
       router.push('/#join')
     }
   }
@@ -222,7 +225,10 @@ function Home() {
         <div style = {{width: '100vw', minHeight: '100vh', display: "flex"}} id = "join">
             <div className = "join-div" style = {{width: isHeightLessThanWidth? '' : '100vw', marginRight: isHeightLessThanWidth? '0' : '10%'}}>
               <div className = "join-box" style = {{width: isHeightLessThanWidth? '25vw':'100%', borderRadius: '20px', display: 'flex', flexDirection: 'column'}}>
-                <div style = {{textAlign: 'center'}}>            
+              <stripe-pricing-table pricing-table-id="prctbl_1PbPZMGgmz5ueyITW4weX3yg"
+            publishable-key="pk_live_51Pa2ARGgmz5ueyITPtFMdyoiFjJUyj9QhkItGI9WLSGDfLYLBu4Ie2V64lqqXWjYj3oGF7lOttphkbKo18x5FNO2008bz79PZY">
+            </stripe-pricing-table>
+                {/*<div style = {{textAlign: 'center'}}>            
                   <h1 className = "join-title">Join Us</h1>
                   <p>${!monthly? "15" : "20"}/month billed {!monthly? "annually" : "monthly"}</p>
                   {!monthly&& <p style = {{color: '#dd1111'}}>25% DISCOUNT</p>}
@@ -234,7 +240,7 @@ function Home() {
                 <h2 className = "perks-title">Perks</h2>
                 <p className='perks-text'>- Access to the current (beta) version of our arbitrage bets searcher</p>
                 <p className='perks-text'>- Access to our odds calculator</p>
-                <button className='join-button' onClick = {join}><p>Join Now</p></button>
+                <button className='join-button' onClick = {join}><p>Join Now</p></button>*/}
               </div>
             </div>
             { isHeightLessThanWidth&&
