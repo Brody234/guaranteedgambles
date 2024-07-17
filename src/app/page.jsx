@@ -174,7 +174,7 @@ function Home() {
 
             </div>
             <div  style = {{height: '5vh', }}/>
-            <p className = "intro-text">Arbitrage betting is a strategy that allows you to bet on both teams and win money regardless of which team wins the game. Our site is designed to help you find arbitrage betting opportunities way more often.</p>
+            <p className = "intro-text">Arbitrage betting is a strategy that allows you to bet on both teams and win money regardless of which team wins the game. Our site is designed to help you find these arbitrage betting opportunities way more often.</p>
           </div>
           {isHeightLessThanWidth &&
             <div style = {{ marginLeft: '10vw', marginTop: '12vh'}}>
@@ -205,7 +205,7 @@ function Home() {
             <div style = {{height: '2vh'}} />
             <p>These bets can be hard to find, so we find them for you.</p>
             <div style = {{height: '2vh'}}/>
-            <p>Please note that people under 21, or the legal age for sports betting in your region, should not be betting and there is always inherent risk when putting money into the hands of a bookmaker.</p>
+            <p>Please note that people under 21, or the legal age for sports betting in your region, should not be betting and there is always inherent risk when putting money into the hands of a bookmaker. Whenever you are gambling, you should do it responsibly.</p>
           </div>
           { isHeightLessThanWidth &&
             <div style = {{position: 'absolute', marginLeft: '5vw', marginTop: '35vh', width: '40vw'}}>
