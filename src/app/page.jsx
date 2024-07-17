@@ -3,7 +3,7 @@ import messi from '../images/messiclear.png'
 import lebron from '../images/lebronclear2.png'
 import arbitrage from '../images/arbitrage.png'
 import Image from 'next/image';
-import { useRouter, useParams, useSearchParams } from 'next/navigation';
+import { useRouter, useParams, useSearchParams, usePathname } from 'next/navigation';
 import Footer from '@/components/footer';
 import { useAuth } from '@/contexts/authcontext';
 import { useState, useEffect, Suspense } from 'react';
@@ -22,6 +22,22 @@ function Home() {
   const affiliateId = query.get('af');
   const checkSession = query.get('checksession')
   const { affiliate, setAffiliate } = useAff()
+
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if(window !== null){
+      const hash = window.location.hash;
+      if (hash) {
+        const id = hash.substring(1); // Remove the leading '#' character
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView();
+        }
+      }
+    }
+  }, [pathname, query]);
+
 
   useEffect(() => {
     console.log("effecting")
@@ -180,14 +196,16 @@ function Home() {
       </div>
       <FadeInSection>
         <div style = {{width: '100vw', minHeight: '100vh', display: 'flex'}} id="aboutus">
-          <div style = {{ marginLeft: !isHeightLessThanWidth? '10vw':'55vw', marginTop: '40vh', width: !isHeightLessThanWidth? '80vw':'35vw'}}>
+          <div style = {{ marginLeft: !isHeightLessThanWidth? '10vw':'55vw', marginTop: '30vh', width: !isHeightLessThanWidth? '80vw':'35vw'}}>
             <h1>How it works</h1>
             <div style = {{height: '5vh'}} />
             <p>Arbitrage betting relies on different bookmakers having different odds.</p>
             <div style = {{height: '2vh'}} />
-            <p>If two bookmakers have different odds for the same event, it is possible to make more money than you put in while betting on both teams.</p>
+            <p>If two bookmakers have different odds for the same event, it is possible to make more money than you put in while betting on both teams, so that you win no matter who wins.</p>
             <div style = {{height: '2vh'}} />
             <p>These bets can be hard to find, so we find them for you.</p>
+            <div style = {{height: '2vh'}}/>
+            <p>Please note that people under 21, or the legal age for sports betting in your region, should not be betting and there is always inherent risk when putting money into the hands of a bookmaker.</p>
           </div>
           { isHeightLessThanWidth &&
             <div style = {{position: 'absolute', marginLeft: '5vw', marginTop: '35vh', width: '40vw'}}>
