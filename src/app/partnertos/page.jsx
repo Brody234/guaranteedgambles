@@ -44,7 +44,7 @@ return(
             </h2>
             <p >
                 <span >
-                    Prior to receiving any payouts, you will be required to submit the necessary tax forms to us. These requirements may change depending on where you live and the total value of commissions you are receiving. It is your responsibility to ensure that the tax forms are accurate and submitted on time. Delayed or inaccurate tax forms can result in delayed payouts. This is required as we need to write off commissions in taxes or else between commissions and taxes we could lose money.
+                    Prior to receiving any payouts, you may be required to submit the necessary tax forms to us. These requirements may change depending on where you live and the total value of commissions you are receiving. It is your responsibility to ensure that the tax forms are accurate and submitted on time. Delayed or inaccurate tax forms can result in delayed payouts. This is required as we need to write off commissions in taxes or else between commissions and taxes we could lose money.
                 </span>
             </p>
             <h2  id="h.55qoyf5p394j">
