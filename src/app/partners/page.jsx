@@ -99,7 +99,7 @@ export default function Affiliates() {
                                 checked={agreed} 
                                 onChange={(e) => setAgreed(!agreed)} 
                             />
-                            <label onClick={()=>router.push('/affiliatetos')} style = {{color: join? 'white' : 'red'}}>
+                            <label onClick={()=>router.push('/partnertos')} style = {{color: join? 'white' : 'red'}}>
                                 I have read and agree to the terms of use.
                             </label>
                         </div>
