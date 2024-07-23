@@ -116,7 +116,7 @@ export default function Affiliates() {
             <div style = {{display: 'flex', width: '100vw', justifyContent: 'space-around', marginTop: '3em', flexDirection: isHeightLessThanWidth? 'row': 'column'}}>
                 <div className = "affiliate-box" style = {{backgroundColor: '#dd8844', ...adaptableMoneyBox}} >
                     <h3 style = {{...adaptableMoneyBoxH3}}>Pending Sales</h3>
-                    <p className="affiliate-money" style = {{...adaptableMoneyBoxMoney}} >${affiliateData?.pendingFunds.toFixed(2) || 0}</p>
+                    <p className="affiliate-money" style = {{...adaptableMoneyBoxMoney}} >${affiliateData?.pendingFunds?.toFixed(2) || 0}</p>
                 </div>
                 <div className="affiliate-box" style = {{backgroundColor: "#33c390", ...adaptableMoneyBox}}>
                     <h3 style = {{...adaptableMoneyBoxH3}}>Approved Sales</h3>
