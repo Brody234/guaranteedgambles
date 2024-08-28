@@ -133,7 +133,7 @@ export default function Arb() {
                         </div>
 
                         <button onClick = {()=>{arb()}}        
-                            className = "find-opportunities-button" style = {{marginTop: isHeightLessThanWidth? '' : '1vh'}}><p>Find Opportuninities</p></button>
+                            className = "find-opportunities-button" style = {{marginTop: isHeightLessThanWidth? '' : '1vh'}}><p>Find Opportunities</p></button>
                     </div>
                     <div style = {{height: '3vh'}}/>
                 </div>
