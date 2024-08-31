@@ -18,6 +18,9 @@ export default function Footer() {
     const privacy = () =>{
         router.push('/privacypolicy')
     }
+    const qna = () =>{
+        router.push('/qna')
+    }
 
     return(
         <div style = {{width: '100vw', borderTop: '1px solid #555555dd', display: 'flex', justifyContent: 'space-between'}}>
@@ -26,6 +29,7 @@ export default function Footer() {
                 <button className="footer-button" style = {{fontSize: '.8em'}} onClick = {imgLis}><p>Image Licenses</p></button>
                 <button className="footer-button" style = {{fontSize: '.8em'}} onClick = {tou}><p>Terms Of Use</p></button>
                 <button className="footer-button" style = {{fontSize: '.8em'}} onClick = {aff}><p>Partners</p></button>
+                <button className="footer-button" style = {{fontSize: '.8em'}} onClick = {qna}><p>Q&A</p></button>
                 <div style = {{marginBottom: '2em'}} />
             </div>
             <div style = {{marginRight: '20vw', marginTop: '2vh', display: 'flex', flexDirection: 'column', gap: '.5em', width: '15vw', textAlign: 'center'}}>
@@ -33,7 +37,6 @@ export default function Footer() {
                 <p className="footer-text" style = {{fontSize: '.8em'}}>Support at info@guaranteedgambles.com</p>
                 <button className="footer-button" style = {{fontSize: '.8em'}} onClick = {privacy}><p>Privacy Policy</p></button>
                 <button className="footer-button" style = {{fontSize: '.8em'}} onClick = {affTos}><p>Partner TOS</p></button>
-
             </div>
         </div>
     )
