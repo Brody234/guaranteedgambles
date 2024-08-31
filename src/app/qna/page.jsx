@@ -45,9 +45,7 @@ export default function Home() {
       <p>Welcome to Guaranteed Gambles Q&A, here you can find all the information about what our site is and how it works, as well as generic sports betting questions. This is a hand written Q&A by the guy who made this website, and not some AI generated BS. I will come back later and make the page look pretty (sorry).</p>
       {qnas.map((val, i)=>{
         return(
-            <div>
-                <QnaItem question = {val.question} answer={val.answer} key = {i}/>
-            </div>
+            <QnaItem question = {val.question} answer={val.answer} key = {i}/>
         )
       })}
     </div>
