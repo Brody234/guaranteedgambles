@@ -1,5 +1,6 @@
 "use client"
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const qnas = [{
     question: "What is Guaranteed Gambles?",
@@ -36,13 +37,31 @@ const qnas = [{
 {
     question: "What is an example of arbitrage in sports betting?",
     answer: "Imagine a random college baseball game is happening tomorrow. Due to the low publicity of the game, Draft Kings has set their odds to a value very different from that of BetMGM. Perhaps MGM says one team has +200 odds, while Draft Kings says the other has +200 odds. If you bet $100 on both teams, one on each site you will make $300 on the site that hits while only paying $200 total. This is a very basic example, arbitrage can also happen when both sites favor the same team as long as their odds are different enough."
+},
+{
+    question: "What does +200 mean in betting?",
+    answer: "In betting +200 means that if you bet 100 dollars you would win 200 dollars if your bet hits. These are American odds which are an odds system where bets that are more likely to happen are represented as numbers below -100 and bets that are less likely to happen and therefore paymore are represented as +100."
+},
+{
+    question: "How does sports betting work?",
+    answer: "Sports betting allows you to put money, usually on an online site. If a specific outcome occurs then you will make money, if it does not occur you will not make said money and you will lose the money you put down originally."
+},
+{
+    question: "Is sports betting good income?",
+    answer: "No, it is generally not good income to depend on sports betting. However, arbitrage sports betting allows you to make a consistent income from sports betting. This is because while arbitrage bets are much smaller, arbitrage sports betting generates consistent money."
+},
+{
+    question: "What does a +500 bet mean?",
+    answer: "In betting +200 means that if you bet 100 dollars you would win 500 dollars if your bet hits. These are American odds which are an odds system where bets that are more likely to happen are represented as numbers below -100 and bets that are less likely to happen and therefore paymore are represented as +100."
 }]
 
 export default function Home() {
+    const router = useRouter()
   return (
     <div>
       <h1>Guaranteed Gambles Q&A</h1>
       <p>Welcome to Guaranteed Gambles Q&A, here you can find all the information about what our site is and how it works, as well as generic sports betting questions. This is a hand written Q&A by the guy who made this website, and not some AI generated BS. I will come back later and make the page look pretty (sorry).</p>
+      <button className="primary-button" onClick = {()=>router.push('/')}><p>Check Out The Main Site</p></button>
       {qnas.map((val, i)=>{
         return(
             <QnaItem question = {val.question} answer={val.answer} key = {i}/>
